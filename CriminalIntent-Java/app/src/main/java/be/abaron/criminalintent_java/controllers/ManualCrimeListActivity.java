@@ -48,25 +48,15 @@ public class ManualCrimeListActivity extends AppCompatActivity {
         }
     }
 
-    private View getCrimeView(final Crime crime) {
-        //création d'un LinearLayout vertical avec un padding de 8
-        LinearLayout columnForCrime = new LinearLayout(getApplicationContext());
-        columnForCrime.setOrientation(LinearLayout.VERTICAL);
-        columnForCrime.setPadding(8, 8, 8, 8);
-
-        //creation des TextViews
-        TextView titleView = getTextView(crime.getTitle());
-        TextView dateView = getTextView(crime.getDate().toString());
-
-        //Ajout des TextViews dans le LinearLayout
-        columnForCrime.addView(titleView);
-        columnForCrime.addView(dateView);
-
+    private View getCrimeView(Crime crime) {
+        View columnForCrime = getLayoutInflater().inflate(R.layout.list_item_crime, null);
+        ((TextView) columnForCrime.findViewById(R.id.crime_title)).setText(crime.getTitle());
+        ((TextView) columnForCrime.findViewById(R.id.crime_date)).setText(crime.getDate().toString());
         setClickOnCrimeView(crime, columnForCrime);
         return columnForCrime;
     }
 
-    private void setClickOnCrimeView(final Crime crime, LinearLayout columnForCrime) {
+    private void setClickOnCrimeView(final Crime crime, View columnForCrime) {
         columnForCrime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
