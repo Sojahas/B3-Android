@@ -2,6 +2,8 @@ package be.abaron.criminalintent_java.controllers;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,9 +41,29 @@ public class ManualCrimeListActivity extends AppCompatActivity {
         }
     }
 
-    private View getCrimeView(Crime crime) {
+    private View getCrimeView(final Crime crime) {
+        //création d'un LinearLayout vertical avec un padding de 8
+        LinearLayout columnForCrime = new LinearLayout(getApplicationContext());
+        columnForCrime.setOrientation(LinearLayout.VERTICAL);
+        columnForCrime.setPadding(8, 8, 8, 8);
+
+        //creation des TextViews
+        TextView titleView = getTextView(crime.getTitle());
+        TextView dateView = getTextView(crime.getDate().toString());
+
+        //Ajout des TextViews dans le LinearLayout
+        columnForCrime.addView(titleView);
+        columnForCrime.addView(dateView);
+        return columnForCrime;
+    }
+
+    //Renvoie un textView avec le texte text
+    private TextView getTextView(String text) {
         TextView textView = new TextView(getApplicationContext());
-        textView.setText(crime.getTitle());
+        textView.setText(text);
+        textView.setLayoutParams(new
+                FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
         return textView;
     }
 }
