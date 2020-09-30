@@ -15,11 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.UUID;
+
 import be.abaron.criminalintent_java.R;
 import be.abaron.criminalintent_java.models.Crime;
+import be.abaron.criminalintent_java.models.CrimeLab;
 
 //Le controleur du fragment
-public class CrimeFragment extends Fragment { //On rend cette classe, en tant qu'une sous-classe de fragment
+public class CrimeFragment extends Fragment {
+    //On rend cette classe, en tant qu'une sous-classe de fragment
+    public static final String CRIME_ID = "CRIME_ID";
     Crime mCrime;
     EditText mTitleField;
     Button mDatebutton;
@@ -29,7 +34,9 @@ public class CrimeFragment extends Fragment { //On rend cette classe, en tant qu
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //On redéfinit la méthode onCreate afin de pouvoir initialiser le Model Crime
-        mCrime = new Crime();
+        //mCrime = new Crime();
+        UUID crime_id = (UUID) getActivity().getIntent().getSerializableExtra("CRIME_ID");
+        mCrime = CrimeLab.get().getCrime(crime_id);
     }
 
     //Redéfinition de la méthode onCreateView afin de pouvoir lier le controleur et la vue

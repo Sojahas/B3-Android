@@ -1,5 +1,6 @@
 package be.abaron.criminalintent_java.controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,12 @@ public class ManualCrimeListActivity extends AppCompatActivity {
         updateUI();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI() {
         mContainer.removeAllViews();
         CrimeLab lab = CrimeLab.get();
@@ -54,7 +61,21 @@ public class ManualCrimeListActivity extends AppCompatActivity {
         //Ajout des TextViews dans le LinearLayout
         columnForCrime.addView(titleView);
         columnForCrime.addView(dateView);
+
+        setClickOnCrimeView(crime, columnForCrime);
         return columnForCrime;
+    }
+
+    private void setClickOnCrimeView(final Crime crime, LinearLayout columnForCrime) {
+        columnForCrime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),
+                        CrimeActivity.class);
+                intent.putExtra(CrimeFragment.CRIME_ID, crime.getID());
+                startActivity(intent);
+            }
+        });
     }
 
     //Renvoie un textView avec le texte text
